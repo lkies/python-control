@@ -494,7 +494,7 @@ def frequency_response(
     Examples
     --------
     >>> G = ct.ss([[-1, -2], [3, -4]], [[5], [7]], [[6, 8]], [[9]])
-    >>> mag, phase, omega = ct.freqresp(G, [0.1, 1., 10.])
+    >>> mag, phase, omega = ct.frequency_response(G, [0.1, 1., 10.])
 
     .. todo::
         Add example with MIMO system
@@ -526,8 +526,8 @@ def frequency_response(
 
     responses = []
     for sys_ in syslist:
-        if isinstance(sys_, FrequencyResponseData) and sys_.ifunc is None and \
-           not omega_range_given:
+        if isinstance(sys_, FrequencyResponseData) and sys_._ifunc is None \
+           and not omega_range_given:
             omega_sys = sys_.omega              # use system properties
         else:
             omega_sys = omega_syslist.copy()    # use common omega vector
@@ -615,14 +615,14 @@ def bandwidth(sys, dbdrop=-3):
     -------
     >>> G = ct.tf([1], [1, 1])
     >>> ct.bandwidth(G)
-    0.9976
+    np.float64(0.9976283451102316)
 
     >>> G1 = ct.tf(0.1, [1, 0.1])
     >>> wn2 = 1
     >>> zeta2 = 0.001
     >>> G2 = ct.tf(wn2**2, [1, 2*zeta2*wn2, wn2**2])
     >>> ct.bandwidth(G1*G2)
-    0.1018
+    np.float64(0.10184838823897456)
 
     """
     if not isinstance(sys, LTI):
